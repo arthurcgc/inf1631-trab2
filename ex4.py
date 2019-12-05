@@ -16,18 +16,33 @@ def max_subarray(arr):
     print(lookupv2)
     return max(lookup)
 
-def maxProduct(self, nums: List[int]):
-        global_max = nums[0]
-        imax, imin = nums[0],nums[0]
-        
-        for i in range(1,len(nums)):
-            print(local_min, local_max, global_max)
-            candidates = (nums[i], imax * nums[i], imin * nums[i])
-            imax = max(candidates)
-            imin = min(candidates)            
-            global_max = max(global_max, imax)
-        return global_max
+def maxProduct(arr):
+    # salva o maior valor encontrado ate agr
+    res = arr[0]
+
+    # imax/imin = maximo e minimo pordutos do subarray que acaba em arr[i]
+
+    for i in range(1, len(arr)):
+        imax = res
+        imin = res
+
+        if arr[i] < 0:
+            # swap(imax, imin)
+            temp = imax
+            imax = imin
+            imin = temp
+
+        # produto de max e min para o numero corrente ou é o numero corrente ou o max ou o min
+
+        imax = max(arr[i], imax * arr[i])
+        imin = min(arr[i], imin*arr[i])
+
+
+        res = max(res, imax)
+
+    return res
+
+
 
 if __name__ == "__main__":
-    print(max_subarray([1,2]))
-
+    print(maxProduct([1,2,3,4,-5,-7]))
