@@ -17,32 +17,22 @@ def max_subarray(arr):
     return max(lookup)
 
 def maxProduct(arr):
-    # salva o maior valor encontrado ate agr
-    res = arr[0]
-
-    # imax/imin = maximo e minimo pordutos do subarray que acaba em arr[i]
+    # import pdb; pdb.set_trace()
+    # variaveis que guardam o maximo e minimo até o índice corrente
+    min_prod = max_prod = arr[0]
+    # salvar o maximo global
+    global_max = arr[0]
 
     for i in range(1, len(arr)):
-        imax = res
-        imin = res
+        tmp = max_prod
 
-        if arr[i] < 0:
-            # swap(imax, imin)
-            temp = imax
-            imax = imin
-            imin = temp
+        max_prod = max(arr[i], max(arr[i] * max_prod, arr[i] * min_prod))
+        min_prod = min(arr[i], min(arr[i] * tmp, arr[i] * min_prod))
 
-        # produto de max e min para o numero corrente ou é o numero corrente ou o max ou o min
+        global_max = max(global_max, max_prod)
 
-        imax = max(arr[i], imax * arr[i])
-        imin = min(arr[i], imin*arr[i])
-
-
-        res = max(res, imax)
-
-    return res
-
+    return global_max
 
 
 if __name__ == "__main__":
-    print(maxProduct([1,2,3,4,-5,-7]))
+    print(maxProduct([-1, 2, -4, 0, 5]))
